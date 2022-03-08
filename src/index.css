@@ -1,13 +1,99 @@
+html,
 body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  background: linear-gradient(58deg, #132d46, #01c38d, #696e79);
+  background-size: 600% 600%;
+  animation: gradient 10s ease infinite;
+  color: white;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  max-width: 80%;
+  margin: auto;
+}
+
+.header {
+  width: 300px;
+}
+
+.password {
+  width: 480px;
+  text-align: center;
+  border-radius: 6px;
+  outline-width: 0;
+  border: 1px solid white;
+  background-color: transparent;
+  height: 2em;
+  color: white;
+}
+
+.password::placeholder {
+  color: white;
+}
+
+.input-button {
+  position: relative;
+  top: -25px;
+  right: -200px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.meter {
+  width: 480px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5em;
+}
+
+.meter .meter-unit {
+  height: 0.4em;
+  width: 80px;
+  background-color: lightgray;
+  border-radius: 8px;
+}
+
+@media screen and (max-width: 600px) {
+  html,
+  body {
+    font-size: 12px;
+  }
+
+  .password,
+  .meter {
+    width: 320px;
+  }
+
+  .meter-unit {
+    height: 0.2em !important;
+    width: 50px !important;
+  }
+
+  .input-button {
+    top: -22px;
+    right: -130px;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 77% 0%;
+  }
+  50% {
+    background-position: 24% 100%;
+  }
+  100% {
+    background-position: 77% 0%;
+  }
 }

@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios";
+import _ from "lodash";
+import { useCallback, useEffect, useState } from "react";
+import Header from "./Header";
+import PasswordInput from "./PasswordInput";
+import PasswordStrengthMeter from "./PasswordStrengthMeter";
+import Result from "./Result";
 
 function App() {
+  const [value, setValue] = useState("");
+  const [result, setResult] = useState(undefined);
+
+  const debouncedValidate = useCallback(_.debounce((value) => {
+    axios.post(
+      "https://o9etf82346.execute-api.us-east-1.amazonaws.com/staging/password/strength",
+      { password: value }
+    ).then((response) => {
+      setResult(response.data)
+    });
+
+  }, 500), []);
+
+  useEffect(() => {
+    if (value.length > 0) {
+      debouncedValidate(value);
+    }
+  }, [value, debouncedValidate])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Header />
+      <PasswordInput value={value} onChange={setValue} />
+      <PasswordStrengthMeter score={result?.score} />
+      <Result result={result} />
     </div>
   );
 }
